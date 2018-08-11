@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <title>Student</title>
+        <link rel="stylesheet"
+              href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"></link>
+    </h:head>
+    <h:body>
+        <center>
+            <h:form id="studentInfo" enctype="multipart/form-data">
+                <h3>Student Information</h3>
+                <p:growl id="growl" sticky="true" />  
+                <h:panelGrid columns="2">
+
+                    <h:outputLabel>Name</h:outputLabel>
+                    <h:inputText a:placeholder="Name" value="#{studentController.student.name}" required="true" requiredMessage="Please add your name."></h:inputText>
+
+                    <h:outputLabel>Serial Number</h:outputLabel>
+                    <h:inputText a:placeholder="Serial Number" value="#{studentController.student.serialNumber}" required="true" requiredMessage="Please add your serial number"></h:inputText>
+
+                    <h:outputLabel>Date of Birth</h:outputLabel>
+                    <h:panelGroup>
+                        <h:inputText a:placeholder="Day" value="#{studentController.day}"></h:inputText>
+                        <h:inputText a:placeholder="Month" value="#{studentController.month}"></h:inputText>
+                        <h:inputText a:placeholder="Year" value="#{studentController.year}"></h:inputText>
+                    </h:panelGroup>
+
+                    <h:outputLabel>Department</h:outputLabel>
+                    <h:selectOneMenu value = "#{studentController.student.department}">
+                        <f:selectItem itemValue = "IT" itemLabel = "IT" />
+                        <f:selectItem itemValue = "CS" itemLabel = "CS" />
+                        <f:selectItem itemValue = "IS" itemLabel = "IS" />
+                    </h:selectOneMenu> 
+
+                    <h:outputLabel>CV</h:outputLabel>
+                    <h:inputFile value="#{studentController.cv}">
+                        <f:ajax listener="#{studentController.uploadFile()}" />
+                    </h:inputFile>
+                    
+                    <h:commandButton actionListener="#{studentController.addNewStudent()}" value="Submit">
+                    </h:commandButton> 
+                </h:panelGrid>
+            </h:form>
+        </center>
+        <div>
+            <center>
+                <h3>Students</h3>
+                <h:dataTable class="table table-striped table-hover table-bordered" value="#{studentController.studentsList}" var="row">
+                    <p:column>
+                        <f:facet name="header">Name</f:facet>
+                        <h:outputText value="#{row.name}" />
+                    </p:column>
+
+                    <p:column headerText="Serial Number">
+                        <f:facet name="header">Serial Number</f:facet>
+                        <h:outputText value="#{row.serialNumber}" />
+                    </p:column>
+
+                    <p:column headerText="Date of Birth">
+                        <f:facet name="header">Date of Birth</f:facet>
+                        <h:outputText value="#{row.dateOfBirth}" />
+                    </p:column>
+
+                    <p:column headerText="Department">
+                        <f:facet name="header">Department</f:facet>
+                        <h:outputText value="#{row.department}" />
+                    </p:column>
+
+                    <p:column headerText="CV">
+                        <f:facet name="header">CV</f:facet>
+                        <h:outputText value="#{row.cv}" />
+                    </p:column>
+                </h:dataTable>
+            </center>
+        </div>
+    </h:body>
+</html>
